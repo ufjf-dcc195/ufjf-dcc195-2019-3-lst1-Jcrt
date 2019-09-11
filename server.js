@@ -7,7 +7,7 @@ function start(route){
           route(url.parse(request.url).pathname);
           response.writeHead(200, {
             "Content-Type": "text/plain", 
-            "Content-Encoding": "UTF-8"
+            "charset": "UTF-8"
           });
           response.write("Olá Mundo, e olá Carolzitcha <3");
           response.end();
