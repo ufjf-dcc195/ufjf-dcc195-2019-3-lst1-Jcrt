@@ -9,7 +9,7 @@ function start(route){
             "Content-Type": "text/plain", 
             "Content-Encoding": "UTF-8"
           });
-          response.write("Olá Mundo");
+          response.write("Olá Mundo, e olá Carolzitcha <3");
           response.end();
     }
     http.createServer(onRequest).listen(port);
