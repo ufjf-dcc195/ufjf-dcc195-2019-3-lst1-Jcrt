@@ -9,5 +9,7 @@ function loop(){
     console.log("Fim do loop!");
 }
 
-exports.hello = hello;
-exports.loop = loop;
+const _hello = hello;
+export { _hello as hello };
+const _loop = loop;
+export { _loop as loop };

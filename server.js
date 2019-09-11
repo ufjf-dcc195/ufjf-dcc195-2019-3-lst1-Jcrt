@@ -1,14 +1,17 @@
-var http = require("http");
-var url = require("url");
+import { createServer } from "http";
+import { parse } from "url";
+
 function start(route){
     function onRequest(request, response){
           console.log("Requisição recebida");
-          route(url.parse(request.url).pathname);
+          route(parse(request.url).pathname);
           response.writeHead(200, {"Content-Type": "text/plain"});
-          response.write("Olá Mundo");
+          response.write("Olá Mundo", "utf-8");
           response.end();
-  }
-    http.createServer(onRequest).listen(8888);
+    }
+
+    createServer(onRequest).listen(8888);
     console.log("Servidor iniciado em localhost:8888");
 }
-exports.start = start
+const _start = start;
+export { _start as start };
