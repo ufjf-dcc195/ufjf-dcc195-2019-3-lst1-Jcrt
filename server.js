@@ -1,7 +1,9 @@
 var http = require("http");
-function start(){
+var url = require("url");
+function start(route){
     function onRequest(request, response){
           console.log("Requisição recebida");
+          route(url.parse(request.url).pathname);
           response.writeHead(200, {"Content-Type": "text/plain"});
           response.write("Olá Mundo");
           response.end();
