@@ -1,0 +1,23 @@
+{
+  "name": "trb1_dcc195_labwebiii",
+  "version": "1.0.0",
+  "description": "Primeiro trabalho da disciplina DCC195 - Laboratório de Sistemas Web III",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jcrt/DCC195-LaboratorioDeSistemasWebIII.git"
+  },
+  "author": "Julio Trindade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jcrt/DCC195-LaboratorioDeSistemasWebIII/issues"
+  },
+  "homepage": "https://github.com/Jcrt/DCC195-LaboratorioDeSistemasWebIII#readme",
+  "dependencies": {
+    "commonjs": "0.0.1"
+  }
+}
