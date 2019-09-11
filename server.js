@@ -1,5 +1,6 @@
 var http = require("http");
 var url = require("url");
+let port = process.env.PORT || process.argv[2] || 8080;
 function start(route){
     function onRequest(request, response){
           console.log("Requisição recebida");
@@ -8,7 +9,7 @@ function start(route){
           response.write("Olá Mundo");
           response.end();
   }
-    http.createServer(onRequest).listen(8888);
-    console.log("Servidor iniciado em localhost:8888");
+    http.createServer(onRequest).listen(port);
+    console.log(`Servidor iniciado em localhost: ${port}`);
 }
 exports.start = start
