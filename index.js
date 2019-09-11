@@ -1,5 +1,4 @@
-import { start } from "./server";
-import { route } from "./router";
+var server = require("./server");
+var router = require("./router");
 
-start(route);
-
+server.start(router.route);
