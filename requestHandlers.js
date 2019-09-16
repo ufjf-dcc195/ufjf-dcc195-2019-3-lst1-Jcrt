@@ -46,12 +46,71 @@ function primos(request, response){
             )
         );
     } else {
-        response.write(`Os parâmetros inicio=${primosQueryStr.inicio} e fim=${primosQueryStr.fim} são inválidos`);
+        response.write(`Os parâmetros para inicio=${primosQueryStr.inicio} e fim=${primosQueryStr.fim} informados são inválidos`);
     }
 }
 
+//Action: GET e POST
 function equacao(request, response){
-    
+    if(request.method == "GET"){
+        response.write("<form method='POST' action='/equacao.html'>");
+        response.write("<p><input name='a' type='text' placeholder='a' style='width: 40px' />x² + ");
+        response.write("<input name='b' type='text' placeholder='b' style='width: 40px'  />x + ");
+        response.write("<input name='c' type='text' placeholder='c' style='width: 40px'  /> = 0</p>");
+        response.write("<p><input name='Calcular' type='submit' /></p>");
+        response.write("</form>");
+    }
+    else if(request.method == "POST"){
+        
+        //implementar e ver pq tá dando erro
+        // equacao = postRequestHandler();
+        equacao = {
+            "a": 1, 
+            "b": -3, 
+            "c": -10
+        };
+
+        if(isParamEquacaoValido(equacao.a) && isParamEquacaoValido(equacao.b) && isParamEquacaoValido(equacao.c)){
+            calcRaizesEquacao(parseInt(equacao.a), parseInt(equacao.b), parseInt(equacao.c));
+        }
+        else{
+            response.write(`Os valores para a=${equacao.a}, b=${equacao.b} e c=${equacao.c} informados são inválidos`);
+        }
+    }
+}
+
+
+function calcRaizesEquacao(a, b, c){
+    let results= [];
+    let delta = calcDelta(a, b, c);
+
+    console.log(delta);
+
+    if(delta == 0){
+        results["x1"] = calcBhaskara(a, b, delta, false);
+    } else if(delta > 0){
+        results["x1"] = calcBhaskara(a, b, delta, false);
+        results["x2"] = calcBhaskara(a, b, delta, true);
+    }
+    console.log(results);
+    return results;
+}
+
+function calcBhaskara(a, b, delta, isRaizDeltaNegativa){
+    let raizDelta = Math.sqrt(delta);
+    if(isRaizDeltaNegativa)
+        raizDelta = 0 - raizDelta;
+    return ((0 - b) + raizDelta) / (2*a)
+}
+
+function calcDelta(a, b, c){
+    return Math.pow(b,2) - (4 * a * c);
+}
+
+function isParamEquacaoValido(param){
+    if(param != undefined && !isNaN(param))
+        return true;
+    return false;
 }
 
 //Action: GET
@@ -124,9 +183,14 @@ function getQueryString(_url){
     );
 }
 
+function postRequestHandler(request){
+
+}
+
 exports.hello = hello;
 exports.sobre = sobre;
 exports.aleatorios = aleatorios;
 exports.primos = primos;
+exports.equacao = equacao;
 
 exports.error = error;
