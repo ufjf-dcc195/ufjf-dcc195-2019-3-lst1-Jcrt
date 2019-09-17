@@ -41,7 +41,7 @@ function setBackgroundWithHorse(horsePos, x, y){
     let background =  `background: ` + ((x + y)%2 == 0 ? 'white' : 'black');
     if(horsePos != undefined){
         if(x == horsePos.x &&  y == horsePos.y){
-            background = "background-image: url\(\"\/img\/horse.png\"\); background: red";
+            background = "background-image: url\(\"https:\/\/www.pinclipart.com\/picdir\/middle/\191-1916865_horse-chess-piece-knight-comments-knight-chess-piece.png"\); background: red";
         }
         else if(isHorseTarget(horsePos, x, y)){
             background = `background: green`;
