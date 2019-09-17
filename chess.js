@@ -1,6 +1,6 @@
 function calcHorse(linha, coluna){
     let horsePos;
-    if(isInRange(linha) && isInRange(coluna)){
+    if(isInRange(coluna) && isInRange(linha)){
         horsePos = {
             x: linha, 
             y: coluna,
@@ -22,7 +22,7 @@ function getJsonHorse(linha, coluna){
 
 function drawBoard(linha, coluna){
     let squareSize = 60;
-    let horsePos = calcHorse(linha, coluna);
+    let horsePos = calcHorse(coluna, linha);
 
     let out = "<table style='border: 3px solid gray' cellpadding='0' cellspacing='0'>";
     for(let i=1; i<9;i++){

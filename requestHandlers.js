@@ -113,7 +113,7 @@ function xadrez(request, response){
         y = coords.y
     }
 
-    response.write(chessModule.drawBoard(y, x));
+    response.write(chessModule.drawBoard(x, y));
 }
 
 function getJsonHorse(request, response){
@@ -125,7 +125,7 @@ function getJsonHorse(request, response){
     if(coords.y != undefined){
         y = coords.y
     }
-    response.write(chessModule.getJsonHorse(y, x));
+    response.write(chessModule.getJsonHorse(x, y));
 }
 
 //Action: GET
