@@ -1,9 +1,17 @@
 const urlModule = require("url");
 const queryStrModule = require("querystring");
+const chessModule = require("./chess");
 
 //Action: GET
 function hello(request, response){
-    response.write("<h1>Hello World</h1>");
+    response.write("<h1>DCC195 - Laboratório de sistemas web III</h1>");
+    response.write("<ol>")
+    response.write("<li><a href='/sobre.html'>Sobre</a></li>");
+    response.write("<li><a href='/aleatorios.html'>Números aleatórios</a></li>");
+    response.write("<li><a href='/primos.html?inicio=1&fim=99'>Números primos (link predefinido para mostrar de 1 a 99)</a></li>");
+    response.write("<li><a href='/equacao.html'>Equação do segundo grau</a></li>");
+    response.write("<li><a href='/xadrez.html'>Xadrez</a></li>");
+    response.write("</ol>");
 }
 
 //Action: GET
@@ -30,8 +38,11 @@ function aleatorios(request, response){
             listaImpar.push(number);
         }
     }
+    response.write("<table><tr><td style='vertical-align: top'>");
     response.write(printList("Lista de números pares", listaPar));
+    response.write("</td><td style='vertical-align: top'>");
     response.write(printList("Lista de números ímpares", listaImpar));
+    response.write("</td></tr></table>");
 }
 
 //Action: GET
@@ -57,13 +68,18 @@ function equacao(request, response){
         response.write("<p><input name='a' type='text' placeholder='a' style='width: 40px' />x² + ");
         response.write("<input name='b' type='text' placeholder='b' style='width: 40px'  />x + ");
         response.write("<input name='c' type='text' placeholder='c' style='width: 40px'  /> = 0</p>");
-        response.write("<p><input name='Calcular' type='submit' /></p>");
+        response.write("<p><input name='Calcular' type='submit' value='submit' /></p>");
         response.write("</form>");
     }
-    else if(request.method == "POST"){
+    else if(request.method == "POST"){    
         
-        //implementar e ver pq tá dando erro
-        // equacao = postRequestHandler();
+        // let bodyStr = '';
+        // request.on('data', (chunk) => {
+        //     bodyStr += chunk;
+        // }).on('end', () => {
+        //     console.log(bodyStr);
+        // });
+
         equacao = {
             "a": 1, 
             "b": -3, 
@@ -71,7 +87,14 @@ function equacao(request, response){
         };
 
         if(isParamEquacaoValido(equacao.a) && isParamEquacaoValido(equacao.b) && isParamEquacaoValido(equacao.c)){
-            calcRaizesEquacao(parseInt(equacao.a), parseInt(equacao.b), parseInt(equacao.c));
+            let raizes = calcRaizesEquacao(parseInt(equacao.a), parseInt(equacao.b), parseInt(equacao.c));
+            if(raizes["x1"] != undefined){
+                response.write(`Esta equação tem raiz x1 = ${raizes["x1"]}`);
+                if(raizes["x2"] != undefined)
+                    response.write(` e x2 = ${raizes["x2"]}`);
+            } else{
+                response.write("Esta equação não tem raízes reais");
+            }
         }
         else{
             response.write(`Os valores para a=${equacao.a}, b=${equacao.b} e c=${equacao.c} informados são inválidos`);
@@ -79,38 +102,30 @@ function equacao(request, response){
     }
 }
 
+function xadrez(request, response){
+    let coords = getQueryString(request.url);
+    let x = 0, y = 0;
 
-function calcRaizesEquacao(a, b, c){
-    let results= [];
-    let delta = calcDelta(a, b, c);
-
-    console.log(delta);
-
-    if(delta == 0){
-        results["x1"] = calcBhaskara(a, b, delta, false);
-    } else if(delta > 0){
-        results["x1"] = calcBhaskara(a, b, delta, false);
-        results["x2"] = calcBhaskara(a, b, delta, true);
+    if(coords.x != undefined){
+        x = coords.x;
     }
-    console.log(results);
-    return results;
+    if(coords.y != undefined){
+        y = coords.y
+    }
+
+    response.write(chessModule.drawBoard(x, y));
 }
 
-function calcBhaskara(a, b, delta, isRaizDeltaNegativa){
-    let raizDelta = Math.sqrt(delta);
-    if(isRaizDeltaNegativa)
-        raizDelta = 0 - raizDelta;
-    return ((0 - b) + raizDelta) / (2*a)
-}
-
-function calcDelta(a, b, c){
-    return Math.pow(b,2) - (4 * a * c);
-}
-
-function isParamEquacaoValido(param){
-    if(param != undefined && !isNaN(param))
-        return true;
-    return false;
+function getJsonHorse(request, response){
+    let coords = getQueryString(request.url);
+    let x = 0, y = 0;
+    if(coords.x != undefined){
+        x = coords.x;
+    }
+    if(coords.y != undefined){
+        y = coords.y
+    }
+    response.write(chessModule.getJsonHorse(x, y));
 }
 
 //Action: GET
@@ -183,8 +198,34 @@ function getQueryString(_url){
     );
 }
 
-function postRequestHandler(request){
+function calcRaizesEquacao(a, b, c){
+    let results= [];
+    let delta = calcDelta(a, b, c);
 
+    if(delta == 0){
+        results["x1"] = calcBhaskara(a, b, delta, false);
+    } else if(delta > 0){
+        results["x1"] = calcBhaskara(a, b, delta, false);
+        results["x2"] = calcBhaskara(a, b, delta, true);
+    }
+    return results;
+}
+
+function calcBhaskara(a, b, delta, isRaizDeltaNegativa){
+    let raizDelta = Math.sqrt(delta);
+    if(isRaizDeltaNegativa)
+        raizDelta = 0 - raizDelta;
+    return ((0 - b) + raizDelta) / (2*a)
+}
+
+function calcDelta(a, b, c){
+    return Math.pow(b,2) - (4 * a * c);
+}
+
+function isParamEquacaoValido(param){
+    if(param != undefined && !isNaN(param))
+        return true;
+    return false;
 }
 
 exports.hello = hello;
@@ -192,5 +233,6 @@ exports.sobre = sobre;
 exports.aleatorios = aleatorios;
 exports.primos = primos;
 exports.equacao = equacao;
-
+exports.xadrez = xadrez;
 exports.error = error;
+exports.getJsonHorse = getJsonHorse;

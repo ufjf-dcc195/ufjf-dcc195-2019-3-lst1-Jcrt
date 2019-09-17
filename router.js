@@ -1,11 +1,12 @@
 function route (pathname, handlers, request, response){
+    
     response.writeHead(200, {
         "Content-Type": "text/html; charset=utf-8", 
     });
 
     if(typeof handlers[pathname] == 'function'){
         handlers[pathname](request, response);
-    } else{
+    } else {
        handlers["error"](request, response);
     }
 

@@ -4,18 +4,13 @@ let requestHandlers = require("./requestHandlers");
 
 var handlers = {};
 handlers["/"] = requestHandlers.hello;
+handlers["error"] = requestHandlers.error;
 handlers["/index.html"] = requestHandlers.hello;
 handlers["/sobre.html"] = requestHandlers.sobre
 handlers["/aleatorios.html"] = requestHandlers.aleatorios;
 handlers["/primos.html"] = requestHandlers.primos;
 handlers["/equacao.html"] = requestHandlers.equacao;
-
-// handlers["/primos.html"]
-// handlers["/equacao.html"]
-// handlers["/xadrez.html"]
-
-handlers["error"] = requestHandlers.error;
-
-
+handlers["/xadrez.html"] = requestHandlers.xadrez;
+handlers["/xadrez.json"] = requestHandlers.getJsonHorse;
 
 server.start(router.route ,handlers);
