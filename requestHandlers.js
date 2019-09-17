@@ -105,25 +105,23 @@ function equacao(request, response){
 function xadrez(request, response){
     let coords = getQueryString(request.url);
     let x = 0, y = 0;
-
-    if(coords.x != undefined){
-        x = coords.x;
+    if(coords.coluna != undefined){
+        x = coords.coluna;
     }
-    if(coords.y != undefined){
-        y = coords.y
+    if(coords.linha != undefined){
+        y = coords.linha;
     }
-
     response.write(chessModule.drawBoard(x, y));
 }
 
 function getJsonHorse(request, response){
     let coords = getQueryString(request.url);
     let x = 0, y = 0;
-    if(coords.x != undefined){
-        x = coords.x;
+    if(coords.coluna != undefined){
+        x = coords.coluna;
     }
-    if(coords.y != undefined){
-        y = coords.y
+    if(coords.linha != undefined){
+        y = coords.linha;
     }
     response.write(chessModule.getJsonHorse(x, y));
 }

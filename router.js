@@ -1,7 +1,8 @@
 function route (pathname, handlers, request, response){
     
+    let contentType = (handlers[pathname]["contentType"] == undefined ? 'text/html': handlers[pathname]["contentType"]);
     response.writeHead(200, {
-        "Content-Type": "text/html; charset=utf-8", 
+        "Content-Type": `${contentType}; charset=utf-8`, 
     });
 
     if(typeof handlers[pathname] == 'function'){

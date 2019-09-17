@@ -11,6 +11,10 @@ handlers["/aleatorios.html"] = requestHandlers.aleatorios;
 handlers["/primos.html"] = requestHandlers.primos;
 handlers["/equacao.html"] = requestHandlers.equacao;
 handlers["/xadrez.html"] = requestHandlers.xadrez;
+
+//Caso especial para xadrez
 handlers["/xadrez.json"] = requestHandlers.getJsonHorse;
+handlers["/xadrez.json"]["contentType"] = "application/json";
+
 
 server.start(router.route ,handlers);

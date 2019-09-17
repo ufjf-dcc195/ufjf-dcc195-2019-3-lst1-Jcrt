@@ -14,7 +14,7 @@ function getJsonHorse(linha, coluna){
     let horsePos = calcHorse(linha, coluna);
     if(horsePos == undefined)
         horsePos = {
-            "ErrorMessage": "Devem ser passadas, via método GET, as variáveis x e y com valor entre 1 a 8"
+            "ErrorMessage": "Devem ser passadas, via método GET, as variáveis linha e coluna com valores entre 1 a 8"
         };
 
     return JSON.stringify(horsePos);
@@ -23,13 +23,17 @@ function getJsonHorse(linha, coluna){
 function drawBoard(linha, coluna){
     let squareSize = 60;
     let horsePos = calcHorse(coluna, linha);
-
+    let horseURL = "https://longfordpc.com/images/knight-clipart-chess-13.png";
     let out = "<table style='border: 3px solid gray' cellpadding='0' cellspacing='0'>";
     for(let i=1; i<9;i++){
         out += "<tr>";
         for(let j=1;j<9;j++){
+            let horseTag = '';
+            if(horsePos != undefined && horsePos.x == i && horsePos.y == j){
+                horseTag = `<img style='width: ${squareSize}; height: ${squareSize}' src='${horseURL}' />`;
+            }
             let styleTd = "style='width: " + squareSize + "px; height: " + squareSize + "px; " + setBackgroundWithHorse(horsePos, i, j) + "'";
-            out += "<td " + styleTd + "></td>";
+            out += `<td ${styleTd}>${horseTag}</td>`;
         }
         out += "</tr>";
     }
@@ -40,10 +44,7 @@ function drawBoard(linha, coluna){
 function setBackgroundWithHorse(horsePos, x, y){
     let background =  `background: ` + ((x + y)%2 == 0 ? 'white' : 'black');
     if(horsePos != undefined){
-        if(x == horsePos.x &&  y == horsePos.y){
-            background = "background-image: url\(\"\"\); background: red";
-        }
-        else if(isHorseTarget(horsePos, x, y)){
+        if(isHorseTarget(horsePos, x, y)){
             background = `background: green`;
         }
     }
